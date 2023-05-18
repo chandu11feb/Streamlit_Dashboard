@@ -1,6 +1,24 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import requests
+import os
+
+owner = 'chandu11feb'
+repo_name = 'Streamlit_Dashboard'
+
+try:
+    # Make a request to the GitHub API to get the list of all folders in the repository
+    response = requests.get(f'https://api.github.com/repos/{owner}/{repo_name}/contents')
+
+    # Get the list of all folders in the repository
+    folder_names = [item['name'] for item in response.json() if item['type'] == 'dir']
+except:
+    st.markdown('<span style="color: red;">Failed to retrieve the Excel sheet from the repository. </span>',
+                unsafe_allow_html=True)
+
+# Print the folder names
+print(folder_names)
 import os
 
 
@@ -34,17 +52,6 @@ submit_button=st.sidebar.button("submit")
 
 st.sidebar.markdown("EC on-board: Microchip")
 
-excel_file_path="C:\Scripts"
-# thread_sheet=pd.read_excel(f'C:\Scripts\{release}_{sku}\Rtsaca.xlsx')
-# static_ram_sheet=pd.read_excel(f'C:\Scripts\{release}_{sku}\static_ram.xlsx')
-# flash_memory_sheet=pd.read_excel(f'C:\Scripts\{release}_{sku}\Flash_memory_usage.xlsx')
-# compare_stack_usage_sheet=pd.read_excel(f'C:\Scripts\{release}_{sku}\compare_stack_usage_across_EC_FW_release.xlsx')
-# data_structure_holes_sheet=pd.read_excel(f'C:\Scripts\{release}_{sku}\data_structure_holes.xlsx')
-# worst_case_stack_sheet=pd.read_excel(f'C:\Scripts\{release}_{sku}\worst_case_stack_req.xlsx')
-# EC_power_consumption_sheet=pd.read_excel(f'C:\Scripts\{release}_{sku}\EC_power_consumption.xlsx')
-
-# thread_sheet=pd.read_csv(filepath_or_buffer="C:\Scripts\Rtsaca.xlsx")
-
 
 def show_warning_popup():
     st.markdown("""
@@ -63,6 +70,58 @@ elif sku == None:
     st.markdown('<span style="color: red;">Please Select SKU </span>', unsafe_allow_html=True)
 else:
     combination = release + "_" + sku
+    st.subheader(combination)
+    if combination in folder_names:
+        try:
+            # Set the repository owner, repository name, and the file path of the Excel sheet in the GitHub repository
+            owner = 'chandu11feb'
+            repo_name = 'Streamlit_Dashboard'
+
+            file_path = combination + '/Rtsaca.xlsx'
+            # Make a request to the GitHub API to get the raw content of the Excel sheet
+            github_url = f'https://api.github.com/repos/{owner}/{repo_name}/contents/{file_path}'
+            response1 = requests.get(github_url)
+            content_url = response1.json().get('download_url')
+            thread_sheet = pd.read_excel(content_url)
+
+            file_path = combination + '/static_ram.xlsx'
+            github_url = f'https://api.github.com/repos/{owner}/{repo_name}/contents/{file_path}'
+            response1 = requests.get(github_url)
+            content_url = response1.json().get('download_url')
+            static_ram_sheet = pd.read_excel(content_url)
+
+            file_path = combination + '/Flash_memory_usage.xlsx'
+            github_url = f'https://api.github.com/repos/{owner}/{repo_name}/contents/{file_path}'
+            response1 = requests.get(github_url)
+            content_url = response1.json().get('download_url')
+            flash_memory_sheet = pd.read_excel(content_url)
+
+            file_path = combination + '/compare_stack_usage_across_EC_FW_release.xlsx'
+            github_url = f'https://api.github.com/repos/{owner}/{repo_name}/contents/{file_path}'
+            response1 = requests.get(github_url)
+            content_url = response1.json().get('download_url')
+            compare_stack_usage_sheet = pd.read_excel(content_url)
+
+            file_path = combination + '/data_structure_holes.xlsx'
+            github_url = f'https://api.github.com/repos/{owner}/{repo_name}/contents/{file_path}'
+            response1 = requests.get(github_url)
+            content_url = response1.json().get('download_url')
+            data_structure_holes_sheet = pd.read_excel(content_url)
+
+            file_path = combination + '/worst_case_stack_req.xlsx'
+            github_url = f'https://api.github.com/repos/{owner}/{repo_name}/contents/{file_path}'
+            response1 = requests.get(github_url)
+            content_url = response1.json().get('download_url')
+            worst_case_stack_sheet = pd.read_excel(content_url)
+
+            file_path = combination + '/EC_power_consumption.xlsx'
+            github_url = f'https://api.github.com/repos/{owner}/{repo_name}/contents/{file_path}'
+            response1 = requests.get(github_url)
+            content_url = response1.json().get('download_url')
+            EC_power_consumption_sheet = pd.read_excel(content_url)
+
+        except:
+            st.markdown('<span style="color: red;">Failed to retrieve the Excel sheet from the repository. </span>', unsafe_allow_html=True)
     if combination in folder_names:
         thread_sheet = pd.read_excel(f'C:\Scripts\{release}_{sku}\Rtsaca.xlsx')
         static_ram_sheet = pd.read_excel(f'C:\Scripts\{release}_{sku}\static_ram.xlsx')
