@@ -63,6 +63,7 @@ elif sku == None:
     st.markdown('<span style="color: red;">Please Select SKU </span>', unsafe_allow_html=True)
 else:
     combination = release + "_" + sku
+    st.subheader(combination)
     if combination in folder_names:
         thread_sheet = pd.read_excel(f'C:\Scripts\{release}_{sku}\Rtsaca.xlsx')
         static_ram_sheet = pd.read_excel(f'C:\Scripts\{release}_{sku}\static_ram.xlsx')
