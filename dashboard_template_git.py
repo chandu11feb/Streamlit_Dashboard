@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import requests
-import os
 
 owner = 'chandu11feb'
 repo_name = 'Streamlit_Dashboard'
@@ -19,15 +18,8 @@ except:
                 unsafe_allow_html=True)
 
 # Print the folder names
-print(folder_names)
-import os
-
-
-excel_file_path="C:\Scripts"
-
-# Get all folder names in the local directory
-folder_names = [folder for folder in os.listdir(excel_file_path) if os.path.isdir(os.path.join(excel_file_path, folder))]
 # print(folder_names)
+
 release_list=[None]
 sku_list=[None]
 for i in folder_names:
