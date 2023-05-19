@@ -15,11 +15,7 @@ try:
 except:
     st.markdown('<span style="color: red;">Failed to retrieve the Excel sheet from the git repository. </span>',
                 unsafe_allow_html=True)
-folder_names=[]
-for item1 in response.json():
-    item_list=list(item1.values())
-    if item_list[8] == 'dir':
-        folder_names.append(item_list[0])
+folder_names = [item1['name'] for item1 in response.json() if item1['type'] == 'dir']
 # Print the folder names
 # print(folder_names)
 
@@ -118,15 +114,6 @@ else:
 
         except:
             st.markdown('<span style="color: red;">Failed to retrieve the Excel sheet from the repository. </span>', unsafe_allow_html=True)
-    if combination in folder_names:
-        thread_sheet = pd.read_excel(f'C:\Scripts\{release}_{sku}\Rtsaca.xlsx')
-        static_ram_sheet = pd.read_excel(f'C:\Scripts\{release}_{sku}\static_ram.xlsx')
-        flash_memory_sheet = pd.read_excel(f'C:\Scripts\{release}_{sku}\Flash_memory_usage.xlsx')
-        compare_stack_usage_sheet = pd.read_excel(
-            f'C:\Scripts\{release}_{sku}\compare_stack_usage_across_EC_FW_release.xlsx')
-        data_structure_holes_sheet = pd.read_excel(f'C:\Scripts\{release}_{sku}\data_structure_holes.xlsx')
-        worst_case_stack_sheet = pd.read_excel(f'C:\Scripts\{release}_{sku}\worst_case_stack_req.xlsx')
-        EC_power_consumption_sheet = pd.read_excel(f'C:\Scripts\{release}_{sku}\EC_power_consumption.xlsx')
 
         thread_sheet_list = thread_sheet.values.tolist()
         # print(thread_sheet_list)
