@@ -7,6 +7,7 @@ import os
 owner = 'chandu11feb'
 repo_name = 'Streamlit_Dashboard'
 
+
 try:
     # Make a request to the GitHub API to get the list of all folders in the repository
     response = requests.get(f'https://api.github.com/repos/{owner}/{repo_name}/contents')
@@ -14,7 +15,7 @@ try:
     # Get the list of all folders in the repository
     folder_names = [item['name'] for item in response.json() if item['type'] == 'dir']
 except:
-    st.markdown('<span style="color: red;">Failed to retrieve the Excel sheet from the repository. </span>',
+    st.markdown('<span style="color: red;">Failed to retrieve the Excel sheet from the git repository. </span>',
                 unsafe_allow_html=True)
 
 # Print the folder names
