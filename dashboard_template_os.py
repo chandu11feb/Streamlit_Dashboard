@@ -1,4 +1,5 @@
 import streamlit as st
+st.set_option('browser.gatherUsageStats', False)
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
