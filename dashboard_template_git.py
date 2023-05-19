@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import requests
+import os
 
 owner = 'chandu11feb'
 repo_name = 'Streamlit_Dashboard'
@@ -13,10 +14,11 @@ try:
 
     # Get the list of all folders in the repository
     folder_names = [item['name'] for item in response.json() if item['type'] == 'dir']
+    # print(folder_names)
 except:
     st.markdown('<span style="color: red;">Failed to retrieve the Excel sheet from the git repository. </span>',
                 unsafe_allow_html=True)
-
+# folder_names = [item['name'] for item in response.json() if item['type'] == 'dir']
 # Print the folder names
 # print(folder_names)
 
