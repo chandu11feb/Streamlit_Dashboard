@@ -11,7 +11,7 @@ folder_names=[]
 try:
     # Make a request to the GitHub API to get the list of all folders in the repository
     response = requests.get(f'https://api.github.com/repos/{owner}/{repo_name}/contents')
-    folder_names = [i1['name'] for i1 in response.json() if i1['type'] == 'dir']
+#     folder_names = [i1['name'] for i1 in response.json() if i1['type'] == 'dir']
 except:
     st.markdown('<span style="color: red;">Failed to retrieve the Excel sheet from the git repository. </span>',
                 unsafe_allow_html=True)
@@ -21,19 +21,20 @@ except:
 # Print the folder names
 # print(folder_names)
 
-release_list=[None]
-sku_list=[None]
-if len(folder_names)==0:
-    release_list=[None,"MTL-P","MTL-S","RPL-P","RPL-S","TGL"]
-    sku_list=[None,"1.70","1.85","1.90","2.0"]
-else:
-    for i in folder_names:
-        folder=i.split("_")
-        if folder[0] not in release_list:
-            release_list.append(folder[0])
-        if folder[1] not in sku_list:
-            sku_list.append(folder[1])
-
+# release_list=[None]
+# sku_list=[None]
+# if len(folder_names)==0:
+#     release_list=[None,"MTL-P","MTL-S","RPL-P","RPL-S","TGL"]
+#     sku_list=[None,"1.70","1.85","1.90","2.0"]
+# else:
+#     for i in folder_names:
+#         folder=i.split("_")
+#         if folder[0] not in release_list:
+#             release_list.append(folder[0])
+#         if folder[1] not in sku_list:
+#             sku_list.append(folder[1])
+release_list=[None,"MTL-P","MTL-S","RPL-P","RPL-S","TGL"]
+sku_list=[None,"1.70","1.85","1.90","2.0"]
 
 st.set_page_config(layout='wide', initial_sidebar_state='expanded')
 st.title("EC Telemetry Analysis")
@@ -69,7 +70,7 @@ elif sku == None:
 else:
     combination = release + "_" + sku
     st.subheader(combination)
-    if combination in folder_names:
+    if combination in folder_names or len(folder_names)==0:
         try:
             # Set the repository owner, repository name, and the file path of the Excel sheet in the GitHub repository
             owner = 'chandu11feb'
