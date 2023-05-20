@@ -15,7 +15,9 @@ try:
 except:
     st.markdown('<span style="color: red;">Failed to retrieve the Excel sheet from the git repository. </span>',
                 unsafe_allow_html=True)
-folder_names = [i1['name'] for i1 in response.json() if i1['type'] == 'dir']
+responseDict=dict(response.json())
+
+folder_names = [i1['name'] for i1 in responseDict if i1['type'] == 'dir']
 # Print the folder names
 # print(folder_names)
 
