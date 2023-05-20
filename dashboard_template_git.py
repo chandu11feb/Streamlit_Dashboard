@@ -11,18 +11,18 @@ repo_name = 'Streamlit_Dashboard'
 try:
     # Make a request to the GitHub API to get the list of all folders in the repository
     response = requests.get(f'https://api.github.com/repos/{owner}/{repo_name}/contents')
-    folder_names = [i1['name'] for i1 in response.json() if i1['type'] == 'dir']
+    #folder_names = [i1['name'] for i1 in response.json() if i1['type'] == 'dir']
 except:
     st.markdown('<span style="color: red;">Failed to retrieve the Excel sheet from the git repository. </span>',
                 unsafe_allow_html=True)
-# responseDict=response.json()
-# folder_names=[]
-# for item in responseDict:
-#     itemDict=dict(item)
-#     if itemDict['type']=='dir':
-#         folder_names.append(itemDict['name'])
+responseDict=response.json()
+folder_names=[]
+for item in responseDict:
+    itemDict=item.copy()
+    if itemDict['type']=='dir':
+        folder_names.append(itemDict['name'])
 
-folder_names = [i1['name'] for i1 in response.json() if i1['type'] == 'dir']
+# folder_names = [i1['name'] for i1 in response.json() if i1['type'] == 'dir']
 # Print the folder names
 # print(folder_names)
 
