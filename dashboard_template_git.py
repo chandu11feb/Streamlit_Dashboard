@@ -19,7 +19,7 @@ responseDict=response.json()
 folder_names=[]
 for item in responseDict:
     itemDict=dict(item)
-    if itemDict['type']=='dir:
+    if itemDict['type']=='dir':
         folder_names.append(itemDict['name'])
 
 # folder_names = [i1['name'] for i1 in responseDict if i1['type'] == 'dir']
