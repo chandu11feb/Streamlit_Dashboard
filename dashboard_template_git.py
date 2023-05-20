@@ -7,20 +7,15 @@ import os
 owner = 'chandu11feb'
 repo_name = 'Streamlit_Dashboard'
 
-
+folder_names=[]
 try:
     # Make a request to the GitHub API to get the list of all folders in the repository
     response = requests.get(f'https://api.github.com/repos/{owner}/{repo_name}/contents')
-    #folder_names = [i1['name'] for i1 in response.json() if i1['type'] == 'dir']
+    folder_names = [i1['name'] for i1 in response.json() if i1['type'] == 'dir']
 except:
     st.markdown('<span style="color: red;">Failed to retrieve the Excel sheet from the git repository. </span>',
                 unsafe_allow_html=True)
-responseDict=response.json()
-folder_names=[]
-for item in responseDict:
-    itemDict=item.copy()
-    if itemDict['type']=='dir':
-        folder_names.append(itemDict['name'])
+
 
 # folder_names = [i1['name'] for i1 in response.json() if i1['type'] == 'dir']
 # Print the folder names
@@ -28,12 +23,16 @@ for item in responseDict:
 
 release_list=[None]
 sku_list=[None]
-for i in folder_names:
-    folder=i.split("_")
-    if folder[0] not in release_list:
-        release_list.append(folder[0])
-    if folder[1] not in sku_list:
-        sku_list.append(folder[1])
+if len(folder_names)==0:
+    release_list=[None,"MTL-P","MTL-S","RPL-P","RPL-S","TGL"]
+    sku_list=[None,"1.70","1.85","1.90","2.0"]
+else:
+    for i in folder_names:
+        folder=i.split("_")
+        if folder[0] not in release_list:
+            release_list.append(folder[0])
+        if folder[1] not in sku_list:
+            sku_list.append(folder[1])
 
 
 st.set_page_config(layout='wide', initial_sidebar_state='expanded')
